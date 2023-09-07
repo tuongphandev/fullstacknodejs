@@ -80,14 +80,15 @@ let updateUserData = (data) => {
     return new Promise( async (resolve, reject) => {
         try {
             let user = await db.User.findOne({
-                where: { id: data.id}
+                where: { id: data.id},
+                raw: false
             })
-            if (user) {
-                user.firstName = data.firstName;
+            if (user) {user.firstName = data.firstName;
                 user.lastName = data.lastName;
                 user.address = data.address;
 
                 await user.save();
+                
 
                 let allUsers = await db.User.findAll();
                 resolve(allUsers);
